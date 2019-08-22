@@ -1,5 +1,7 @@
 .env
 .env.*
+!.env.example
 node_modules/
 package-lock.json
-*bundle.js
+*bundle.*
+.DS_Store
