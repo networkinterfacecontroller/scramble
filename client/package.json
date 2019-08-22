@@ -18,6 +18,7 @@
     "openssl-nodejs": "^1.0.5",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-router-dom": "^5.0.1",
     "twilio-chat": "^3.3.1"
   },
   "devDependencies": {

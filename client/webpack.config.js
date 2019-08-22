@@ -6,7 +6,6 @@ require("@babel/register");
 
 const config = {
   entry: {scramble: './src/index.jsx'},
-  name: 'scramble',
   output: {
     path: path.resolve(__dirname, '../static'),
     filename: '[name].bundle.js'
@@ -47,6 +46,12 @@ const config = {
     new MiniCssExtractPlugin({
       filename: '[name].bundle.css'
     }),
-  ]
+  ],
+  resolve: {
+    extensions: ['.jsx', '.scss', ".webpack.js", ".web.js", ".js"]
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, '../static')
+  }
 };// Exports
 module.exports = config;
