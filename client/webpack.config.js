@@ -52,6 +52,6 @@ const config = {
   },
   devServer: {
     contentBase: path.resolve(__dirname, '../static')
-  }
+  },
 };// Exports
 module.exports = config;

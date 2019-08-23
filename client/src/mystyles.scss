@@ -1,2 +1,15 @@
 @charset "utf-8";
 @import "~bulma/bulma";
+
+#welcomeBanner {
+  font-size: 3em;
+}
+
+.s-header {
+  font-size: 3.5em;
+  font-weight: 900;
+}
+
+* {
+  font-family: "Courier New", "Courier";
+}

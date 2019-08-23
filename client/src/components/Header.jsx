@@ -1,16 +1,21 @@
 import React from 'react';
 
-export default function() {
+function Header(props) {
   return(
     <div className="hero-head">
       <nav className="level">
         <div className="level-left">
           <img src='img/eggcrack.png'/>
         </div>
-        <div className="level-right" style={{fontFamily: ["Courier New", "Courier"], fontSize: '3.5em', color: 'black', fontWeight: '900'}}>
+        {Boolean(props.identity) &&
+          <div className="level-item subtitle">Your address is: <strong>{props.identity}</strong></div>
+        }
+        <div className="level-right s-header has-text-black">
           Scramble.
         </div>
       </nav>
     </div>
   )
 }
+
+export default Header;

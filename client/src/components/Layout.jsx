@@ -6,7 +6,7 @@ import Footer from './Footer';
 function Layout(props) {
   return (
     <div>
-      <Header />
+      <Header identity={props.identity}/>
       {props.children}
       <Footer />
     </div>
