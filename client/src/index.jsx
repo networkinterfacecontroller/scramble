@@ -13,24 +13,22 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      identity: '',
+      identity: '4c6e64fd-5e34-4bcc-8d26-dd3b004d1aac',
       keys: {
         secret: '',
-        shared: ''
+        shared: 'B/6lvtjcjxKLunASiu1WK4uMp9lk38llyP1O6mcLS1E='
       }
     }
   }
 
   setIdentity = (identity) => {
     this.setState({
-      ...this.state,
       identity
     })
   }
 
   setKeys = (secret, shared) => {
     this.setState({
-      ...this.state,
       keys: {secret, shared}
     })
   }

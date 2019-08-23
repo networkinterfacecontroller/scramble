@@ -6,13 +6,14 @@ class Welcome extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bannerItems: [
-        "Hello. Let's talk privately..",
-        "Scramble keeps your conversations safe using the same technology as secured websites.",
-        "We generate the keys on your computer, not our server.",
-        "Privacy should be easy and accessible for everyone!",
-        "Let's get started."
-      ]
+      // bannerItems: [
+      //   "Hello. Let's talk privately..",
+      //   "Scramble keeps your conversations safe using the same technology as secured websites.",
+      //   "We generate the keys on your computer, not our server.",
+      //   "Privacy should be easy and accessible for everyone!",
+      //   "Let's get started."
+      // ]
+      bannerItems: ["go"]
     };
   }
 

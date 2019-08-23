@@ -1,12 +1,14 @@
 import os
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
+from flask_cors import CORS
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import ChatGrant
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 app = Flask(__name__)
+CORS(app)
 
 account_sid = os.environ['TWILIO_ACCOUNT_SID']
 api_key = os.environ['TWILIO_API_KEY']
@@ -19,8 +21,8 @@ def index():
 
 @app.route('/token', methods=['POST','GET'])
 def token():
-    if request.form.get('identity'):
-        token = AccessToken(account_sid, api_key, api_secret, identity=request.form['identity'])
+    if request.json.get('identity'):
+        token = AccessToken(account_sid, api_key, api_secret, identity=request.json['identity'])
         chat_grant = ChatGrant(service_sid=chat_service_sid)
         token.add_grant(chat_grant)
         return jsonify({'token': token.to_jwt().decode('utf-8')})
