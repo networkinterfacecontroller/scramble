@@ -2,6 +2,8 @@ import React from 'react';
 import Twilio from 'twilio-chat';
 const axios = require('axios');
 
+import Chat from './Chat'
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -41,9 +43,15 @@ class Home extends React.Component {
   }
 
   render() {
-    return(
-      <h1 className="title">Hi!</h1>
-    );
+    if (this.state.client) {
+      return (
+        <Chat client={this.state.client}/>
+      );
+    } else {
+      return(
+        <h1 className="title">Hi!</h1>
+      );
+    }
   }
 }
 
