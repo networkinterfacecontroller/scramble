@@ -39,13 +39,13 @@ class Home extends React.Component {
 
   setupChat = async () => {
     let me = await this.state.client.getUser(this.props.identity);
-    me = await me.updateAttributes({'public_key': this.props.keys.shared});
+    me = await me.updateAttributes({'publicKey': this.props.keys.shared});
   }
 
   render() {
     if (this.state.client) {
       return (
-        <Chat client={this.state.client}/>
+        <Chat client={this.state.client} keys={this.props.keys}/>
       );
     } else {
       return(

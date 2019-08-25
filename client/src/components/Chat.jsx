@@ -1,19 +1,35 @@
 import React from 'react';
 const axios = require('axios');
 
+import Chatroom from './Chatroom';
+
 class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeChannel: '',
+      activeChannel: null,
+      otherPerson: null,
       addressField: '',
       messageField: '',
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    //if we get invited to a channel, we should look up the other user to get publicKey
+    //TODO: add accept/decline logic for invites
     this.props.client.on('channelInvited', channel => {
-      channel.join().then(channel => this.channelJoined(channel));
+      channel.join().then(channel => {
+        this.setState({activeChannel: channel});
+        channel.getMembers().then(memlist => {
+          memlist.forEach(member => {
+            if (member.identity != this.props.client.user.identity) {
+              member.getUser().then(user => {
+                this.setState({otherPerson: user});
+              })
+            }
+          })
+        })
+      });
     })
   }
 
@@ -21,40 +37,22 @@ class Chat extends React.Component {
     this.setState({addressField: event.target.value})
   }
 
-  handleMessageChange = (event) => {
-    this.setState({messageField: event.target.value})
-  }
-
-  keyPress = (event) => {
-    if (event.key === 'Enter') {
-      this.sendMessage()
-    }
-  }
-
-  sendMessage = async () => {
-    await this.state.activeChannel.sendMessage(this.state.messageField)
-    this.setState({messageField: ''})
-  }
-
   connectToAddress = async () => {
     let channel = await this.props.client.createChannel({isPrivate: true});
     await channel.join();
-    this.channelJoined(channel);
     try {
       await channel.invite(this.state.addressField);
+      let user = await this.props.client.getUser(this.state.addressField);
+      //if we are the inviter, store the user we're inviting for public key access
+      this.setState({otherPerson: user});
+      this.setState({activeChannel: channel});
     } catch {
+      //leave and delete failed channel
       await channel.leave();
-      this.setState({activeChannel: ''});
+      this.setState({activeChannel: null});
       this.cleanupChannel(channel.sid);
       this.setState({addressField: 'USER NOT FOUND'});
     }
-  }
-
-  channelJoined = (channel) => {
-    this.setState({activeChannel: channel});
-    channel.on('messageAdded', message => {
-      console.log(message);
-    })
   }
 
   cleanupChannel = (channelSid) => {
@@ -64,7 +62,7 @@ class Chat extends React.Component {
   }
 
   render() {
-    if (!this.state.activeChannel) {
+    if (!this.state.activeChannel || !this.state.otherPerson) {
       return (
         <div className="container" style={{height: '50vh', width: '50%'}}>
           <h1 className="subtitle">Enter another address to chat</h1>
@@ -83,21 +81,12 @@ class Chat extends React.Component {
       )
     }
     return (
-      <div className="container">
-        <div className="container" style={{backgroundColor: 'white', height: '50vh', width: '40%'}}>
-          stuff
-        </div>
-        <input
-          id="messageField"
-          type="text"
-          className="input"
-          placeholder="say something.."
-          value={this.state.messageField}
-          style={{width: '40%'}}
-          onChange={this.handleMessageChange}
-          onKeyPress={this.keyPress}
-        />
-      </div>
+      <Chatroom
+        channel={this.state.activeChannel}
+        client={this.props.client}
+        otherUser={this.state.otherPerson}
+        keys={this.props.keys}
+      />
     );
   }
 }
