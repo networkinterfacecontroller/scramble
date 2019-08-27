@@ -80,20 +80,21 @@ class Chatroom extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="container has-background-white" id="messageDiv" style={{overflowY: 'auto', height: '50vh', width: '30%'}}>
-          <MessageHistory messages={this.state.messageHistory} client={this.props.client}/>
+      <div className="container columns is-centered is-multiline">
+        <div className="column is-one-third">
+          <div className="box has-background-white" id="messageDiv" style={{overflowY: 'auto', height: '50vh'}}>
+            <MessageHistory messages={this.state.messageHistory} client={this.props.client}/>
+          </div>
+          <input
+            id="messageField"
+            type="text"
+            className="input box column"
+            placeholder="say something.."
+            value={this.state.messageField}
+            onChange={this.handleMessageChange}
+            onKeyPress={this.keyPress}
+          />
         </div>
-        <input
-          id="messageField"
-          type="text"
-          className="input"
-          placeholder="say something.."
-          value={this.state.messageField}
-          style={{width: '30%'}}
-          onChange={this.handleMessageChange}
-          onKeyPress={this.keyPress}
-        />
       </div>
     );
   }

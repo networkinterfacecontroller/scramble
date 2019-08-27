@@ -1,5 +1,6 @@
 @charset "utf-8";
-@import "~bulma/bulma";
+@import "~bulma/sass/utilities/initial-variables";
+@import "~bulma/sass/utilities/functions";
 
 #welcomeBanner {
   font-size: 3em;
@@ -13,3 +14,5 @@
 * {
   font-family: "Courier New", "Courier";
 }
+
+@import "~bulma/bulma";

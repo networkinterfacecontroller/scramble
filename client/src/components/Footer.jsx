@@ -7,7 +7,7 @@ export default function() {
         <div className="level-left">
         </div>
         <div className="level-right s-header has-text-white">
-          Made with <img src="" alt="&nbsp;coffee"/>.
+          Powered by <img src="" alt="&nbsp;coffee"/>.
         </div>
       </nav>
     </div>
