@@ -1,6 +1,7 @@
 import React from 'react';
 
-import Message from './Message';
+import Message from '../helpers/message';
+import MessageHistory from './MessageHistory'
 import { encrypt, decrypt } from '../helpers/encryption'
 
 class Chatroom extends React.Component {
@@ -14,7 +15,6 @@ class Chatroom extends React.Component {
 
   componentDidMount() {
     this.props.channel.on('messageAdded', message => {
-      console.log(this.state.messageHistory);
       if (message.author != this.props.client.user.identity) {
         let msg = decrypt(
           message.body,
@@ -33,6 +33,12 @@ class Chatroom extends React.Component {
         });
       }
     })
+  }
+
+  componentDidUpdate() {
+    //scroll to bottom of window to follow chats
+    var element = document.getElementById("messageDiv");
+    element.scrollTop = element.scrollHeight;
   }
 
   handleMessageChange = (event) => {
@@ -65,9 +71,9 @@ class Chatroom extends React.Component {
           )
         ]
       })
-    } catch {
+    } catch (error) {
       //add error handling for failed send
-      console.log('oops');
+      console.log(error);
     }
     this.setState({messageField: ''});
   }
@@ -75,8 +81,8 @@ class Chatroom extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="container" style={{backgroundColor: 'white', height: '50vh', width: '40%'}}>
-          stuff
+        <div className="container has-background-white" id="messageDiv" style={{overflowY: 'auto', height: '50vh', width: '30%'}}>
+          <MessageHistory messages={this.state.messageHistory} client={this.props.client}/>
         </div>
         <input
           id="messageField"
@@ -84,7 +90,7 @@ class Chatroom extends React.Component {
           className="input"
           placeholder="say something.."
           value={this.state.messageField}
-          style={{width: '40%'}}
+          style={{width: '30%'}}
           onChange={this.handleMessageChange}
           onKeyPress={this.keyPress}
         />
