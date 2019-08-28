@@ -47,13 +47,16 @@ class Chatroom extends React.Component {
 
   keyPress = (event) => {
     if (event.key === 'Enter' && this.state.messageField.length > 0) {
-      this.sendMessage();
+      //passing message as var and immediately resetting state for messageField
+      //because encryption time was causing delays
+      this.sendMessage(this.state.messageField);
+      this.setState({messageField: ''});
     }
   }
 
-  sendMessage = async () => {
+  sendMessage = async (text) => {
     let msg = encrypt(
-      this.state.messageField,
+      text,
       this.props.otherUser.attributes.publicKey,
       this.props.keys.secret
     );
@@ -65,7 +68,7 @@ class Chatroom extends React.Component {
         messageHistory: [
           ...this.state.messageHistory,
           new Message(
-            this.state.messageField,
+            text,
             this.props.client.user.identity,
             Date.now()
           )
@@ -75,7 +78,6 @@ class Chatroom extends React.Component {
       //add error handling for failed send
       console.log(error);
     }
-    this.setState({messageField: ''});
   }
 
   render() {
