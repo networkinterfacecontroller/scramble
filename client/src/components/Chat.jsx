@@ -64,10 +64,10 @@ class Chat extends React.Component {
   render() {
     if (!this.state.activeChannel || !this.state.otherPerson) {
       return (
-        <div className="container" style={{height: '50vh', width: '50%'}}>
+        <div className="container" style={{height: '50vh', width: '40%'}}>
           <h1 className="subtitle has-text-weight-bold">Enter another address to chat</h1>
           <input
-            className="input"
+            className="input has-text-centered"
             id="addressField"
             type="text"
             placeholder="address.."

@@ -8,9 +8,9 @@ function Header(props) {
           <img src='img/eggcrack.png'/>
         </div>
         {Boolean(props.identity) &&
-          <div className="level-item subtitle has-text-weight-bold">Your address is: <strong>{props.identity}</strong></div>
+          <p className="subtitle has-text-weight-bold">Your address is: <strong>{props.identity}</strong></p>
         }
-        <div className="level-right s-header has-text-black">
+        <div className="level-right s-header has-text-black" style={{marginLeft: '-150px'}}>
           Scramble.
         </div>
       </nav>
